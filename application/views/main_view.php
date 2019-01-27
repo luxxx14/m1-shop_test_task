@@ -3,6 +3,7 @@
 
 <div id="detailsDialog">
     <form id="detailsForm">
+        <input type="hidden" name="id" id="id" />
         <div class="details-form-field">
             <label for="album_name">Название альбома:</label>
             <input id="album_name" name="album_name" type="text" />
@@ -92,13 +93,14 @@
             pageLastText: 'Последняя',
             pagerFormat: 'Страницы: {first} {prev} {pages} {next} {last} &nbsp;&nbsp; {pageIndex} из {pageCount}',
             deleteConfirm: function(item) {
-                return "Запись альбома \"" + item.Name + "\" будет удалена. Продолжить?";
+                return "Запись альбома \"" + item.album_name + "\" будет удалена. Продолжить?";
             },
             rowClick: function(args) {
                 showDetailsDialog("Изменить", args.item);
             },
             controller: db,
             fields: [
+                { name: "id", type: "text", title: "ID", width: 10 },
                 { name: "album_name", type: "text", title: "Название альбома", width: 100 },
                 { name: "artist_name", type: "text", title: "Имя артиста", width: 100 },
                 { name: "album_year", type: "number", title: "Год выпуска альбома", width: 120 },
@@ -161,6 +163,8 @@
             $("#purchase_price").val(album.purchase_price);
             $("#storage_code").val(album.storage_code);
 
+            $("#id").val(album.id);
+
             formSubmitHandler = function() {
                 savealbum(album, dialogType === "Добавить");
             };
@@ -177,7 +181,8 @@
                 album_duration: $("#album_duration").val(),
                 buy_date: $("#buy_date").val(),
                 purchase_price: $("#purchase_price").val(),
-                storage_code: $("#storage_code").val()
+                storage_code: $("#storage_code").val(),
+                id: $("#id").val()
             });
 
             $("#jsGrid").jsGrid(isNew ? "insertItem" : "updateItem", album);

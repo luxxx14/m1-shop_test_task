@@ -11,7 +11,7 @@ class Controller_main extends Controller
 
     function actionIndex()
     {
-        echo '<br>';
+        print '<br>';
         $this->view->generate('main_view.php', 'template_view.php'/*, $data*/);
     }
 
@@ -23,6 +23,16 @@ class Controller_main extends Controller
 
     function actionInsertData() {
         print intval($this->model->insert_data($_POST));
+        exit;
+    }
+
+    function actionUpdateData() {
+        print intval($this->model->update_data($_POST));
+        exit;
+    }
+
+    function actionDeleteData() {
+        print intval($this->model->delete_data($_POST['id']));
         exit;
     }
 }

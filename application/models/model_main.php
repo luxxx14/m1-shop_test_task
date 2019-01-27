@@ -14,7 +14,6 @@ class Model_main extends Model
         return $data;
     }
 
-
     public function insert_data($data) {
         $sql_cmd = "INSERT INTO `test` 
                     (`id`,
@@ -28,14 +27,35 @@ class Model_main extends Model
                       `storage_code`)
                     VALUES (null, 
                             'image.png', 
-                            '".$this->db->mysql_escape_mimic($data['album_name'])."', 
-                            '".$this->db->mysql_escape_mimic($data['artist_name'])."', 
-                            '".$this->db->mysql_escape_mimic($data['album_year'])."', 
-                            '".$this->db->mysql_escape_mimic($data['album_duration'])."', 
-                            '".$this->db->mysql_escape_mimic($data['buy_date'])."', 
-                            '".$this->db->mysql_escape_mimic($data['purchase_price'])."', 
-                            '".$this->db->mysql_escape_mimic($data['storage_code'])."')";
+                            '" . $this->db->mysql_escape_mimic($data['album_name']) . "', 
+                            '" . $this->db->mysql_escape_mimic($data['artist_name']) . "', 
+                            '" . $this->db->mysql_escape_mimic($data['album_year']) . "', 
+                            '" . $this->db->mysql_escape_mimic($data['album_duration']) . "', 
+                            '" . $this->db->mysql_escape_mimic($data['buy_date']) . "', 
+                            '" . $this->db->mysql_escape_mimic($data['purchase_price']) . "', 
+                            '" . $this->db->mysql_escape_mimic($data['storage_code']) . "')";
+        $sql_res = $this->db->sqlExec($sql_cmd);
 
+        return $sql_res;
+    }
+
+    public function update_data($data) {
+        $sql_cmd = "UPDATE `test` SET 
+                                      `album_name` = '" . $this->db->mysql_escape_mimic($data['album_name']) . "',
+                                      `artist_name` = '" . $this->db->mysql_escape_mimic($data['artist_name']) . "',
+                                      `album_year` = '" . $this->db->mysql_escape_mimic($data['album_year']) . "',
+                                      `album_duration` = '" . $this->db->mysql_escape_mimic($data['album_duration']) . "',
+                                      `buy_date` = '" . $this->db->mysql_escape_mimic($data['buy_date']) . "',
+                                      `purchase_price` = '" . $this->db->mysql_escape_mimic($data['purchase_price']) . "',
+                                      `storage_code` = '" . $this->db->mysql_escape_mimic($data['storage_code']) . "'
+                                      WHERE `id` = '" . $this->db->mysql_escape_mimic($data['id']) . "'";
+        $sql_res = $this->db->sqlExec($sql_cmd);
+
+        return $sql_res;
+    }
+
+    public function delete_data($id) {
+        $sql_cmd = "DELETE FROM `test` WHERE `id` = '" . $this->db->mysql_escape_mimic($id) . "'";
         $sql_res = $this->db->sqlExec($sql_cmd);
 
         return $sql_res;

@@ -30,11 +30,27 @@ function insertItemData(data) {
 }
 
 
-function updateItemData(data, intemId) {
+function updateItemData(data) {
     $.ajax({
         url: '/main/updateData',
         type: 'POST',
         data: data,
+        dataType: 'text',
+        async: false,
+        success: function(data) {
+            if (data > 0) {
+                document.location.href = '/';
+            }
+        }
+    });
+}
+
+
+function deleteItem(itemId) {
+    $.ajax({
+        url: '/main/deleteData',
+        type: 'POST',
+        data: 'id='+itemId,
         dataType: 'text',
         async: false,
         success: function(data) {
@@ -64,18 +80,15 @@ function updateItemData(data, intemId) {
     },
 
     insertItem: function(insertingalbum) {
-        //this.albums.push(insertingalbum);
-        //console.log(insertingalbum);
         insertItemData(insertingalbum);
     },
 
     updateItem: function(updatingalbum) {
-
+        updateItemData(updatingalbum);
     },
 
     deleteItem: function(deletingalbum) {
-        var albumIndex = $.inArray(deletingalbum, this.albums);
-        this.albums.splice(albumIndex, 1);
+        deleteItem(deletingalbum.id);
     }
 
 };
