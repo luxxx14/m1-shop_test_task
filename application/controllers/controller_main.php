@@ -20,4 +20,9 @@ class Controller_main extends Controller
         print json_encode($data);
         exit;
     }
+
+    function actionInsertData() {
+        print intval($this->model->insert_data($_POST));
+        exit;
+    }
 }

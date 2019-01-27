@@ -1,5 +1,5 @@
 
-function test() {
+function getMainData() {
     var result_data;
     $.ajax({
         url: '/main/getData',
@@ -14,51 +14,44 @@ function test() {
 }
 
 
-(function() {
-/*
-    var MyDateField = function(config) {
-        jsGrid.Field.call(this, config);
-    };
-
-    MyDateField.prototype = new jsGrid.Field({
-
-        css: "date-field",            // redefine general property 'css'
-        align: "center",              // redefine general property 'align'
-
-        myCustomProperty: "foo",      // custom property
-
-        sorter: function(date1, date2) {
-            return new Date(date1) - new Date(date2);
-        },
-
-        itemTemplate: function(value) {
-            return new Date(value).toDateString();
-        },
-
-        insertTemplate: function(value) {
-            return this._insertPicker = $("<input>").datepicker({ defaultDate: new Date() });
-        },
-
-        editTemplate: function(value) {
-            return this._editPicker = $("<input>").datepicker().datepicker("setDate", new Date(value));
-        },
-
-        insertValue: function() {
-            return this._insertPicker.datepicker("getDate").toISOString();
-        },
-
-        editValue: function() {
-            return this._editPicker.datepicker("getDate").toISOString();
+function insertItemData(data) {
+    $.ajax({
+        url: '/main/insertData',
+        type: 'POST',
+        data: data,
+        dataType: 'text',
+        async: false,
+        success: function(data) {
+            if (data > 0) {
+                document.location.href = '/';
+            }
         }
     });
+}
 
-    jsGrid.fields.date = MyDateField;
-    */
+
+function updateItemData(data, intemId) {
+    $.ajax({
+        url: '/main/updateData',
+        type: 'POST',
+        data: data,
+        dataType: 'text',
+        async: false,
+        success: function(data) {
+            if (data > 0) {
+                document.location.href = '/';
+            }
+        }
+    });
+}
+
+
+(function() {
 
     var db = {
 
     loadData: function(filter) {
-        console.log(filter);
+        //console.log(filter);
         return $.grep(this.albums, function(album) {
             return (!filter.album_name || album.album_name.indexOf(filter.album_name) > -1)
                 && (!filter.artist_name || album.artist_name.indexOf(filter.artist_name) > -1)
@@ -67,18 +60,13 @@ function test() {
                 && (!filter.album_duration || album.album_duration.indexOf(filter.album_duration) > -1)
                 && (!filter.purchase_price || album.purchase_price.indexOf(filter.purchase_price) > -1)
                 && (!filter.buy_date || album.buy_date.indexOf(filter.buy_date) > -1)
-
-
-                /*&& (filter.album_year === undefined || album.album_year === filter.album_year)*/
-                /*&& (filter.album_duration === undefined || album.album_duration === filter.album_duration)*/
-                /*&& (filter.buy_date === undefined || album.buy_date === filter.buy_date)*/
-                /*&& (filter.purchase_price === undefined || filter.purchase_price === album.purchase_price)
-                /*&& (filter.storage_code === undefined || album.storage_code === filter.storage_code)*/
         });
     },
 
     insertItem: function(insertingalbum) {
-        this.albums.push(insertingalbum);
+        //this.albums.push(insertingalbum);
+        //console.log(insertingalbum);
+        insertItemData(insertingalbum);
     },
 
     updateItem: function(updatingalbum) {
@@ -93,6 +81,6 @@ function test() {
 };
 
     window.db = db;
-    db.albums = test();
+    db.albums = getMainData();
 
 }());

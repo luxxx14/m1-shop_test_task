@@ -31,25 +31,6 @@
             <label for="storage_code">Код хранилища:</label>
             <input id="storage_code" name="storage_code" type="text" />
         </div>
-        <!--
-        <div class="details-form-field">
-            <label for="country">Страна:</label>
-            <select id="country" name="country">
-                <option value="">(Select)</option>
-                <option value="1">United States</option>
-                <option value="2">Canada</option>
-                <option value="3">United Kingdom</option>
-                <option value="4">France</option>
-                <option value="5">Brazil</option>
-                <option value="6">China</option>
-                <option value="7">Russia</option>
-            </select>
-        </div>
-        <div class="details-form-field">
-            <label for="married">Is Married</label>
-            <input id="married" name="married" type="checkbox" />
-        </div>
-        -->
         <div class="details-form-field">
             <button type="submit" id="save">Сохранить</button>
         </div>
@@ -60,19 +41,14 @@
 <script>
     $(function() {
 
-
-
-
         var MyDateField = function(config) {
             jsGrid.Field.call(this, config);
         };
 
         MyDateField.prototype = new jsGrid.Field({
 
-            css: "date-field",            // redefine general property 'css'
-            align: "center",              // redefine general property 'align'
-
-            myCustomProperty: "foo",      // custom property
+            css: "date-field",
+            align: "center",
 
             sorter: function(date1, date2) {
                 return new Date(date1) - new Date(date2);
@@ -100,7 +76,6 @@
         });
 
         jsGrid.fields.date = MyDateField;
-
 
 
         $("#jsGrid").jsGrid({
@@ -131,8 +106,6 @@
                 { name: "buy_date", type: "date", title: "Дата покупки", width: 100 },
                 { name: "purchase_price", type: "number", title: "Стоимость", width: 60 },
                 { name: "storage_code", type: "text", title: "Код хранилища", width: 80 },
-                //{ name: "Country", type: "select", title: "Страна", items: db.countries, valueField: "Id", textField: "Name" },
-                //{ name: "Married", type: "checkbox", title: "Is Married", sorting: false },
                 {
                     type: "control",
                     modeSwitchButton: false,
@@ -158,16 +131,19 @@
 
         $("#detailsForm").validate({
             rules: {
-                name: "required",
-                age: { required: true, range: [18, 150] },
-                address: { required: true, minlength: 10 },
-                country: "required"
+                album_name: "required",
+                artist_name: "required",
+                album_year: { required: true, range: [1900, 2019] },
+                album_duration: { required: true, range: [1, 240] },
+                purchase_price: { required: true, range: [1, 99999] },
+                storage_code: { required: true, minlength: 5 },
+                buy_date: "required"
             },
             messages: {
-                name: "Введите название",
+                /*name: "Введите название",
                 age: "Please enter valid age",
                 address: "Please enter address (more than 10 chars)",
-                country: "Please select country"
+                country: "Please select country"*/
             },
             submitHandler: function() {
                 formSubmitHandler();
@@ -177,14 +153,16 @@
         var formSubmitHandler = $.noop;
 
         var showDetailsDialog = function(dialogType, album) {
-            $("#name").val(album.Name);
-            $("#age").val(album.Age);
-            $("#address").val(album.Address);
-            $("#country").val(album.Country);
-            $("#married").prop("checked", album.Married);
+            $("#album_name").val(album.album_name);
+            $("#artist_name").val(album.artist_name);
+            $("#album_year").val(album.album_year);
+            $("#album_duration").val(album.album_duration);
+            $("#buy_date").val(album.buy_date);
+            $("#purchase_price").val(album.purchase_price);
+            $("#storage_code").val(album.storage_code);
 
             formSubmitHandler = function() {
-                savealbum(album, dialogType === "Add");
+                savealbum(album, dialogType === "Добавить");
             };
 
             $("#detailsDialog").dialog("option", "title", dialogType)
@@ -193,11 +171,13 @@
 
         var savealbum = function(album, isNew) {
             $.extend(album, {
-                Name: $("#name").val(),
-                Age: parseInt($("#age").val(), 10),
-                Address: $("#address").val(),
-                Country: parseInt($("#country").val(), 10),
-                Married: $("#married").is(":checked")
+                album_name: $("#album_name").val(),
+                artist_name: $("#artist_name").val(),
+                album_year: $("#album_year").val(),
+                album_duration: $("#album_duration").val(),
+                buy_date: $("#buy_date").val(),
+                purchase_price: $("#purchase_price").val(),
+                storage_code: $("#storage_code").val()
             });
 
             $("#jsGrid").jsGrid(isNew ? "insertItem" : "updateItem", album);
