@@ -11,7 +11,7 @@ class Controller_main extends Controller
 
     function actionIndex()
     {
-        var_dump(123);
+        echo '<br>';
         $this->view->generate('main_view.php', 'template_view.php'/*, $data*/);
     }
 

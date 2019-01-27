@@ -29,7 +29,6 @@
 
 <body>
 	<?php
-        $data = $data;
         include 'application/views/'.$content_view;
     ?>
 </body>
