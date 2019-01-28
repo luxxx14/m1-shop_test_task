@@ -48,7 +48,7 @@
 
         MyDateField.prototype = new jsGrid.Field({
 
-            css: "date-field",
+            /*css: "date-field",*/
             align: "center",
 
             sorter: function(date1, date2) {
@@ -82,7 +82,7 @@
         $("#jsGrid").jsGrid({
             height: "70%",
             width: "100%",
-            editing: false,
+            editing: true,
             autoload: true,
             paging: true,
             filtering: true,

@@ -67,7 +67,7 @@ function deleteItem(itemId) {
     var db = {
 
     loadData: function(filter) {
-        //console.log(filter);
+        console.log(filter);
         return $.grep(this.albums, function(album) {
             return (!filter.album_name || album.album_name.indexOf(filter.album_name) > -1)
                 && (!filter.artist_name || album.artist_name.indexOf(filter.artist_name) > -1)
