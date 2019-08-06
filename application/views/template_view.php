@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
 	<meta charset="utf-8">
-	<title>Тестовое задание</title>
+	<title>---</title>
 
     <link rel="stylesheet" type="text/css" href="application/js/jsgrid-1.5.3/css/jsgrid.css" />
     <link rel="stylesheet" type="text/css" href="application/js/jsgrid-1.5.3/css/theme.css" />
